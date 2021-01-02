@@ -32,7 +32,7 @@ module Enumerable
 
     speech = true
 
-    if block_given?
+    if !block_given?
       my_each{ |argument| speech = false unless argument }
     elsif !args[0].nil?
       my_each{ |argument| speech = false unless args[0] === argument }
@@ -46,7 +46,7 @@ module Enumerable
     
     speech = false
 
-    if block_given?
+    if !block_given?
       my_each{ |argument| speech = true unless argument }
     elsif !args[0].nil?
       my_each{ |argument| speech = true unless args[0] === argument }
@@ -55,4 +55,28 @@ module Enumerable
     end
   end 
 
+  def my_none(*args)
+    return to_enum unless block_given
+
+    speech = true
+
+    if !block_given?
+      my_each{ |argument| speech = false if yield argument }
+    elsif !args[0].nil?
+      my_each{ |argument| speech = false unless args[0] === argument }
+    else 
+      my_each{ |argument| speech = false unless argument }
+    end    
+  end
+
+  def my_count(num )
+    return to_enum unless block_given
+
+    counter = 0
+
+    self.my_each { |i| counter += 1 if arg == i}
+    counter
+  end
+
+  
 end
