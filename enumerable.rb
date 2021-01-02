@@ -1,5 +1,6 @@
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Style/CaseEquality
 
 module Enumerable
   def my_each
@@ -69,14 +70,37 @@ module Enumerable
     end    
   end
 
-  def my_count(num )
+  def my_count(num)
     return to_enum unless block_given
 
-    counter = 0
+    count = 0
 
-    self.my_each { |i| counter += 1 if arg == i}
-    counter
+    self.my_each { |i| count += 1 if num == i}
+    count
   end
 
-  
+  def my_map(proc_ = nil)
+    return to_enum unless block_given
+
+    list_arr = []
+
+    if proc_.nil?
+      my_each{ |element| list_arr.push(yield(element)) }
+    else
+      my_each{ |element| list_arr.push(proc_.call(element)) }
+    end
+    list_arr
+  end
+
+  def my_inject(acc = 0)
+    return to_enum unless block_given
+
+    self.my_each{ |number| acc = yield(acc, i) }
+    acc
+  end
+
+  def multiply_els(arr)
+    arr.my_inject(:*)
+  end
+
 end
