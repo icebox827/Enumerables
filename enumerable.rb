@@ -5,7 +5,7 @@ module Enumerable
   def my_each
     return to_enum unless block_given
 
-    arr.length.times do |n|
+    arr.length.times do | n|
       yield arr[n]
     end
   end
@@ -77,7 +77,7 @@ module Enumerable
 
     count = 0
 
-    self.my_each { |i| count += 1 if num == i}
+    my_each { |i| count += 1 if num == i}
     count
   end
 
@@ -97,7 +97,7 @@ module Enumerable
   def my_inject(acc = 0)
     return to_enum unless block_given
 
-    self.my_each{ |number| acc = yield(acc, i) }
+    my_each { acc = yield(acc, i) }
     acc
   end
 
@@ -105,3 +105,6 @@ module Enumerable
     arr.my_inject(:*)
   end
 end
+
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
