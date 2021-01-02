@@ -5,8 +5,6 @@ module Enumerable
 
     return to_enum unless block_given
 
-
-
     arr.length.times do |n|
 
       yield arr[n]
@@ -19,8 +17,6 @@ module Enumerable
 
     return to_enum unless block_given
 
-
-
     arr.length.times do |n, i|
 
       yield(arr[i], n)
@@ -32,8 +28,6 @@ module Enumerable
   def my_select 
 
     return to_enum unless block_given
-
-
 
     list = []
 
@@ -55,11 +49,7 @@ module Enumerable
 
     return to_enum unless block_given
 
-
-
     speech = true
-
-
 
     if !block_given?
 
@@ -83,11 +73,7 @@ module Enumerable
 
     return to_enum unless block_given
 
-    
-
     speech = false
-
-
 
     if !block_given?
 
@@ -111,11 +97,7 @@ module Enumerable
 
     return to_enum unless block_given
 
-
-
     speech = true
-
-
 
     if !block_given?
 
@@ -139,11 +121,7 @@ module Enumerable
 
     return to_enum unless block_given
 
-
-
     count = 0
-
-
 
     self.my_each { |i| count += 1 if num == i}
 
@@ -157,11 +135,7 @@ module Enumerable
 
     return to_enum unless block_given
 
-
-
     list_arr = []
-
-
 
     if proc_.nil?
 
@@ -183,8 +157,6 @@ module Enumerable
 
     return to_enum unless block_given
 
-
-
     self.my_each{ |number| acc = yield(acc, i) }
 
     acc
@@ -199,6 +171,6 @@ module Enumerable
 
   end
 
-
-
+  end
+  end
 end
