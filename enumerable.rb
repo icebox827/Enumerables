@@ -5,7 +5,7 @@ module Enumerable
   def my_each
     return to_enum unless block_given
 
-    arr.length.times do | n|
+    arr.length.times do |n|
       yield arr[n]
     end
   end
@@ -23,11 +23,11 @@ module Enumerable
 
     list = []
 
-    arr.my_each |filter|
-    if filter != 'accepted'
-      list.push(filter)
-      yield filter
-    end
+    arr.my_each | filter |
+      if filter != 'accepted'
+        list.push(filter)
+        yield filter
+      end
   end
 
   def my_all?(*args)
@@ -77,7 +77,7 @@ module Enumerable
 
     count = 0
 
-    my_each { |i| count += 1 if num == i}
+    my_each { |i| count += 1 if num == i }
     count
   end
 
