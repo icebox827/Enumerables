@@ -27,9 +27,32 @@ module Enumerable
     end
   end
 
-  def my_all(*args)
+  def my_all?(*args)
     return to_enum unless block_given
 
-    
+    speech = true
+
+    if block_given?
+      my_each{ |argument| speech = false unless argument }
+    elsif !args[0].nil?
+      my_each{ |argument| speech = false unless args[0] === argument }
+    else 
+      my_each{ |argument| speech = false unless yield argument }
+    end
   end
+
+  def my_any?(*args)
+    return to_enum unless block_given
+    
+    speech = false
+
+    if block_given?
+      my_each{ |argument| speech = true unless argument }
+    elsif !args[0].nil?
+      my_each{ |argument| speech = true unless args[0] === argument }
+    else 
+      my_each{ |argument| speech = true unless yield argument }
+    end
+  end 
+
 end
