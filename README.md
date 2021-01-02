@@ -3,7 +3,6 @@ Microverse Ruby Second Project. This project is about implementing my version of
 
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-
 ## Built With
 
 - Ruby
