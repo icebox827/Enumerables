@@ -1,5 +1,7 @@
-module Enumerable
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
 
+module Enumerable
   def my_each
     return to_enum unless block_given
 
@@ -16,7 +18,7 @@ module Enumerable
     end
   end
 
-  def my_select 
+  def my_select
     return to_enum unless block_given
 
     list = []
@@ -34,11 +36,11 @@ module Enumerable
     speech = true
 
     if !block_given?
-      my_each{ |argument| speech = false unless argument }
+      my_each { |argument| speech = false unless argument }
     elsif !args[0].nil?
-      my_each{ |argument| speech = false unless args[0] === argument }
-    else 
-      my_each{ |argument| speech = false unless yield argument }
+      my_each { |argument| speech = false unless args[0] == argument }
+    else
+      my_each { |argument| speech = false unless yield argument }
     end
   end
 
@@ -48,13 +50,13 @@ module Enumerable
     speech = false
 
     if !block_given?
-      my_each{ |argument| speech = true unless argument }
+      my_each { |argument| speech = true unless argument }
     elsif !args[0].nil?
-      my_each{ |argument| speech = true unless args[0] === argument }
-    else 
-      my_each{ |argument| speech = true unless yield argument }
+      my_each { |argument| speech = true unless args[0] == argument }
+    else
+      my_each { |argument| speech = true unless yield argument }
     end
-  end 
+  end
 
   def my_none(*args)
     return to_enum unless block_given
@@ -62,12 +64,12 @@ module Enumerable
     speech = true
 
     if !block_given?
-      my_each{ |argument| speech = false if yield argument }
+      my_each { |argument| speech = false if yield argument }
     elsif !args[0].nil?
-      my_each{ |argument| speech = false unless args[0] === argument }
-    else 
-      my_each{ |argument| speech = false unless argument }
-    end    
+      my_each { |argument| speech = false unless args[0] == argument }
+    else
+      my_each { |argument| speech = false unless argument }
+    end
   end
 
   def my_count(num)
@@ -77,19 +79,17 @@ module Enumerable
 
     self.my_each { |i| count += 1 if num == i}
     count
-
   end
 
   def my_map(proc_ = nil)
-
     return to_enum unless block_given
 
     list_arr = []
 
     if proc_.nil?
-      my_each{ |element| list_arr.push(yield(element)) }
+      my_each { |element| list_arr.push(yield(element)) }
     else
-      my_each{ |element| list_arr.push(proc_.call(element)) }
+      my_each { |element| list_arr.push(proc_.call(element)) }
     end
     list_arr
   end
@@ -104,5 +104,4 @@ module Enumerable
   def multiply_els(arr)
     arr.my_inject(:*)
   end
-
 end
