@@ -2,11 +2,11 @@
 # rubocop:disable Metrics/PerceivedComplexity
 
 module Enumerable
-  def my_each
+  def my_each(arr)
     return to_enum unless block_given
 
     arr.length.times do |n|
-      yield arr[n]
+      n + 1
     end
   end
 
