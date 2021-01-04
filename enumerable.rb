@@ -96,12 +96,11 @@ module Enumerable
   end
 
   def my_count(num)
-    return to_enum unless block_given?
+    arr = instance_of?(Array) ? self : to_a
+    return arr.length unless block_given? || num
+    return arr.my_select { |item| item == num }.length if num
 
-    count = 0
-
-    my_each { |i| count += 1 if num == i }
-    count
+    arr.my_select { |item| yield(item) }.length
   end
 
   def my_map(proc_ = nil)
