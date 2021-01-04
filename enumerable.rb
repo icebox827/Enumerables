@@ -43,9 +43,9 @@ module Enumerable
       return true
     elsif arg.nil?
       my_each { |element| return false if n.nil? || element == false }
-    elsif !arg.nil? && (arg.is_a? Class)
+    elsif !arg.nil? && (args.is_a? Class)
       my_each { |element| return false if element.class != args }
-    elsif !arg.nil? && arg.instance_of?(Regexp)
+    elsif !arg.nil? && args.instance_of?(Regexp)
       my_each { |element| return false unless arg.match(element) }
     else
       my_each { |element| return false if element != args }
@@ -59,9 +59,9 @@ module Enumerable
       false
     elsif arg.nil?
       my_each { |element| return true if n.nil? || element == true }
-    elsif !arg.nil? && (arg.is_a? Class)
+    elsif !arg.nil? && (args.is_a? Class)
       my_each { |element| return true if element.instance_of?(args) }
-    elsif !arg.nil? && arg.instance_of?(Regexp)
+    elsif !arg.nil? && args.instance_of?(Regexp)
       my_each { |element| return true if arg.match(element) }
     else
       my_each { |element| return true if element == args }
@@ -69,18 +69,30 @@ module Enumerable
     false
   end
 
-  def my_none(*args)
-    return to_enum unless block_given?
-
-    speech = true
-
-    if !block_given?
-      my_each { |argument| speech = false if yield argument }
-    elsif !args[0].nil?
-      my_each { |argument| speech = false unless args[0] == argument }
-    else
-      my_each { |argument| speech = false unless argument }
+  def my_none(args = nil)
+    if !block_given? && args.nil?
+      my_each { |num| return true if num }
+      return false
     end
+
+    if !block_given? && !args.nil?
+
+      if args.is_a?(Class)
+        my_each { |num| return false if num.instance_of?(args) }
+        return true
+      end
+
+      if args.instance_of?(Regexp)
+        my_each { |num| return false if args.match(num) }
+        return true
+      end
+
+      my_each { |num| return false if num == args }
+      return true
+    end
+
+    my_any? { |num| return false if yield(num) }
+    true
   end
 
   def my_count(num)
