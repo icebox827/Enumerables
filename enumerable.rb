@@ -3,15 +3,17 @@
 
 module Enumerable
   def my_each
-    return to_enum unless block_given
+    return to_enum(:my_each) unless block_given?
+
+    arr = to_a
 
     arr.length.times do |n|
-      yield arr[n]
+      yield arr[n + 1]
     end
   end
 
   def my_each_with_index
-    return to_enum unless block_given
+    return to_enum unless block_given?
 
     arr.length.times do |n, i|
       yield(arr[i], n)
@@ -19,7 +21,7 @@ module Enumerable
   end
 
   def my_select
-    return to_enum unless block_given
+    return to_enum unless block_given?
 
     list = []
 
@@ -31,7 +33,7 @@ module Enumerable
   end
 
   def my_all?(*args)
-    return to_enum unless block_given
+    return to_enum unless block_given?
 
     speech = true
 
@@ -45,7 +47,7 @@ module Enumerable
   end
 
   def my_any?(*args)
-    return to_enum unless block_given
+    return to_enum unless block_given?
 
     speech = false
 
@@ -59,7 +61,7 @@ module Enumerable
   end
 
   def my_none(*args)
-    return to_enum unless block_given
+    return to_enum unless block_given?
 
     speech = true
 
@@ -73,7 +75,7 @@ module Enumerable
   end
 
   def my_count(num)
-    return to_enum unless block_given
+    return to_enum unless block_given?
 
     count = 0
 
@@ -82,7 +84,7 @@ module Enumerable
   end
 
   def my_map(proc_ = nil)
-    return to_enum unless block_given
+    return to_enum unless block_given?
 
     list_arr = []
 
@@ -95,7 +97,7 @@ module Enumerable
   end
 
   def my_inject(acc = 0)
-    return to_enum unless block_given
+    return to_enum unless block_given?
 
     my_each { acc = yield(acc, i) }
     acc
