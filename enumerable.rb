@@ -26,7 +26,7 @@ module Enumerable
   end
 
   def my_select
-    return to_enum unless block_given?
+    return to_enum(:my_select) unless block_given?
 
     list = []
 
@@ -37,18 +37,20 @@ module Enumerable
       end
   end
 
-  def my_all?(*args)
-    return to_enum unless block_given?
-
-    speech = true
-
-    if !block_given?
-      my_each { |argument| speech = false unless argument }
-    elsif !args[0].nil?
-      my_each { |argument| speech = false unless args[0] == argument }
+  def my_all?(args = nil)
+    if block_given?
+      my_each { |element| return false if yield(element) == false }
+      return true
+    elsif arg.nil?
+      my_each { |element| return false if n.nil? || element == false }
+    elsif !arg.nil? && (arg.is_a? Class)
+      my_each { |element| return false if element.class != args }
+    elsif !arg.nil? && arg.instance_of?(Regexp)
+      my_each { |element| return false unless arg.match(element) }
     else
-      my_each { |argument| speech = false unless yield argument }
+      my_each { |element| return false if element != args }
     end
+    true
   end
 
   def my_any?(*args)
