@@ -104,27 +104,38 @@ module Enumerable
   end
 
   def my_map(proc_ = nil)
-    return to_enum unless block_given?
+    return to_enum unless block_given? || proc_
 
     list_arr = []
 
-    if proc_.nil?
-      my_each { |element| list_arr.push(yield(element)) }
-    else
+    if proc_
       my_each { |element| list_arr.push(proc_.call(element)) }
+    else
+      my_each { |element| list_arr.push(yield(element)) }
     end
     list_arr
   end
 
-  def my_inject(acc = 0)
-    return to_enum unless block_given?
-
-    my_each { acc = yield(acc, i) }
-    acc
-  end
-
-  def multiply_els(arr)
-    arr.my_inject(:*)
+  def my_inject(num = nil, sym = nil)
+    if block_given?
+      acc = num
+      my_each do |element|
+        acc = acc.nil? ? element : yield(acc, element)
+      end
+      acc
+    elsif !num.nil? && (num.is_a?(Symbol) || num.is_a?(String))
+      acc = nil
+      my_each do |element|
+        acc = acc.nil? ? element : acc.send(num, element)
+      end
+      acc
+    elsif !sym.nil? && (sym.is_a?(Symbol) || sym.is_a?(String))
+      acc = num
+      my_each do |element|
+        acc = acc.nil? ? element : acc.send(sym, element)
+      end
+      acc
+    end
   end
 end
 
