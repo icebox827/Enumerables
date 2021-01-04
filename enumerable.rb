@@ -53,18 +53,20 @@ module Enumerable
     true
   end
 
-  def my_any?(*args)
-    return to_enum unless block_given?
-
-    speech = false
-
-    if !block_given?
-      my_each { |argument| speech = true unless argument }
-    elsif !args[0].nil?
-      my_each { |argument| speech = true unless args[0] == argument }
+  def my_any?(args = nil)
+    if block_given?
+      my_each { |element| return true if yield(element) }
+      false
+    elsif arg.nil?
+      my_each { |element| return true if n.nil? || element == true }
+    elsif !arg.nil? && (arg.is_a? Class)
+      my_each { |element| return true if element.instance_of?(args) }
+    elsif !arg.nil? && arg.instance_of?(Regexp)
+      my_each { |element| return true if arg.match(element) }
     else
-      my_each { |argument| speech = true unless yield argument }
+      my_each { |element| return true if element == args }
     end
+    false
   end
 
   def my_none(*args)
