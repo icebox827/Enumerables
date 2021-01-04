@@ -138,7 +138,7 @@ module Enumerable
       acc
     end
   end
-
+ 
 end
 
 # rubocop:enable Metrics/CyclomaticComplexity
